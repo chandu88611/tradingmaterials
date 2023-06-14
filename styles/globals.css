@@ -2,26 +2,390 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+
+
+.product {
+  opacity: 0;
+  transform: translateX(50px);
+  transition: opacity 1.3s ease-in-out, transform 0.5s ease-in-out;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+.in{
+  z-index: 10030 !important;
+}
+.product.show {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.product1 {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+}
+.product3{
+  animation: exclusive 0.8s   ease-in-out;
+}
+
+.rotate{
+  animation: spin .3s infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
   }
 }
-
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+@keyframes exclusive {
+  from {
+    opacity: 0;
+    transform: translateX(130px);
+  }
+to {
+  opacity: 1;
+    transform: translateX(0);
+  }
 }
+/* Track */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 6px;
+  
+}
+
+/* Track Color */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.product1.show1 {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.vertical-text {
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+  white-space: nowrap;
+}
+.arrow-border {
+  position: relative;
+  padding-right: 15px;
+}
+
+.arrow-border::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 0;
+  height: 0;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-left: 10px solid black;
+  transform: translateX(100%);
+}
+
+
+@keyframes rotating {
+    0% {
+      transform: translateX(-500px);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+  .com{
+    animation: spin2 .5s ease-in-out;
+  }
+  .com3{
+    animation: spin2 1s ease-in-out;
+  }
+  @keyframes spin2{
+   from{
+    opacity: 0;
+      transform: translateY(-500px);
+    }
+   to {
+    opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .com1{
+    animation: spin4 1s ease-in-out;
+  }
+  
+  @keyframes spin4{
+   from{
+    opacity: 0;
+      transform: translateX(-500px);
+    }
+   to {
+    opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  .rotate{
+    animation: spin 1s infinite;
+}
+
+@keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  .com2{
+    animation: spin3 1s ease-in-out;
+  }
+  
+  @keyframes spin3{
+   from{
+    opacity: 0;
+      transform: translateX(500px);
+    }
+   to {
+    opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+@keyframes rotating2{
+  0% {
+    transform: translateX(500px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+@keyframes rotating3{
+  0% {
+    transform: translatey(-300px);
+  }
+  100% {
+    transform: translatey(0);
+  }
+}
+ .top{
+  animation: rotating3 1s linear;
+  
+ }
+
+  .animate-slide-left{
+    animation: rotating 2s linear;
+  }
+
+  .animate-slide-right{
+    animation: rotating2 2s linear;
+  }
+
+  /* button */
+  .cta {
+    position: relative;
+    margin: auto;
+    padding: 12px 18px;
+    transition: all 0.2s ease;
+    border: none;
+    background: none;
+   }
+   
+   .cta:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    border-radius: 50px;
+    background: #b1dae7;
+    width: 45px;
+    height: 45px;
+    transition: all 0.3s ease;
+   }
+   
+   .cta span {
+    position: relative;
+    font-family: "Ubuntu", sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color: #234567;
+   }
+   
+   .cta svg {
+    position: relative;
+    top: 0;
+    margin-left: 10px;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke: #234567;
+    stroke-width: 2;
+    transform: translateX(-5px);
+    transition: all 0.3s ease;
+   }
+   
+   .cta:hover:before {
+    width: 100%;
+    background: #b1dae7;
+   }
+   
+   .cta:hover svg {
+    transform: translateX(0);
+   }
+   
+   .cta:active {
+    transform: scale(0.95);
+   }
+
+
+
+   .btn1 {
+    color: rgb(0, 99, 248);
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 2px solid rgb(0, 99, 248);
+    padding: 10px 20px;
+    font-size: 17px;
+    font-weight: bold;
+    background: transparent;
+    position: relative;
+    transition: all 1s;
+    overflow: hidden;
+  }
+  
+  .btn1:hover {
+    color: white;
+  }
+  
+  .fadein {
+    opacity: 0;
+    animation: fadein 1s ease-in-out forwards; 
+  }
+  
+  @keyframes fadein {
+    from {
+      opacity: 0; 
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  .btn1::before {
+    content: '';
+    position: absolute;
+    height: 100%;
+    width: 0%;
+    top: 0;
+    left: -40px;
+    transform: skewX(45deg);
+    background-color: rgb(0, 99, 248);
+    z-index: -1;
+    transition: all 1s;
+  }
+  
+  .btn1:hover::before {
+    width: 160%;
+  } 
+
+
+
+  /* profile page css */
+
+  .address-btn {
+    float: right;
+    background: #FFC107;
+    padding: 0 10px;
+    color: #fff;
+    }
+    .tp-product-details-tab-nav .nav-tabs .nav-link.active, .tp-product-details-tab-nav .nav-tabs .nav-link:hover {
+    color: #0989ff;
+    }
+    /*timeline css start */
+    #overlay {
+    background: linear-gradient(to top, #f6eee0, transparent, transparent, #f6eee0);
+    z-index: 2;
+    }
+    .timeline {
+    height: 50vh;
+    overflow: scroll;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    }        
+    .timeline .event {
+    display: flex;
+    flex-direction: row;
+    }
+    .timeline .event__date {
+    width: 300px;
+    height: auto;
+    text-align: right;
+    font-size: 12px;
+    }
+    .timeline .event__timeline {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    }
+    .timeline .event__dot {
+    background-color: #cdcdcd;
+    height: 10px;
+    width: 10px;
+    border-radius: 100%;
+    margin: 0 20px;
+    }
+    .timeline .event__line {
+    background-color: #cdcdcd;
+    height: 50px;
+    width: 2px;
+    }
+    .timeline .event__description {
+    width: 300px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+    }
+    .timeline .event__link {
+    text-decoration: none;
+    color: #9E9E9E;
+    margin-bottom: -4px;
+    font-size: 16px;
+    font-weight: 600;
+    }
+    .timeline .event__link:hover {
+    text-decoration: underlined #0989ff;
+    }
+    .timeline::-webkit-scrollbar {
+    width: 4px;
+    }
+    .timeline::-webkit-scrollbar-track {
+    background-color: rgba(251, 251, 251, 0.5);
+    border: 1px solid #b7dfff;
+    border-radius: 100px;
+    }
+    .timeline::-webkit-scrollbar-thumb {
+    background-color: #b7dfff;
+    border: 1px solid #d4ecff;
+    border-radius: 100px;
+    }
+    /*Timeline Css End*/
+    .tp-product-list-thumb {
+    flex: auto;
+    }
+    .tp-product-details-tab-nav .nav-tabs .nav-link:not(:first-child) {
+    margin-left: 0;
+    }

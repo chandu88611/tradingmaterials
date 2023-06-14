@@ -1,5 +1,50 @@
-import '@/styles/globals.css'
+import { useEffect, useState } from 'react';
+import Router from 'next/router';
+import NProgress from 'nprogress';
+import 'nprogress/nprogress.css';
+import { wrapper } from '@/store/store';
 
-export default function App({ Component, pageProps }) {
-  return <Component {...pageProps} />
+import { BiLoaderAlt } from "react-icons/bi";
+import '@/styles/globals.css';
+
+Router.events.on('routeChangeStart', () => {
+  NProgress.start();
+});
+
+Router.events.on('routeChangeComplete', () => {
+  NProgress.done();
+});
+
+Router.events.on('routeChangeError', () => {
+  NProgress.done();
+});
+
+function MyApp({ Component, pageProps }) {
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const startLoading = () => setLoading(true);
+    const stopLoading = () => setLoading(false);
+
+    Router.events.on('routeChangeStart', startLoading);
+    Router.events.on('routeChangeComplete', stopLoading);
+    Router.events.on('routeChangeError', stopLoading);
+
+    return () => {
+      Router.events.off('routeChangeStart', startLoading);
+      Router.events.off('routeChangeComplete', stopLoading);
+      Router.events.off('routeChangeError', stopLoading);
+    };
+  }, []);
+
+  return (
+    <>
+      {loading && 
+          <p className='text-center flex h-screen items-center justify-center text-2xl  font-bold'>loading... <BiLoaderAlt className='rotate'/></p>
+         }
+      { !loading && <Component {...pageProps} />}
+    </>
+  );
 }
+
+export default wrapper.withRedux(MyApp);
