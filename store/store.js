@@ -37,12 +37,15 @@ import users from './userSlice.js';
 import popUpSlice from './popUpSlice.js';
 import alertSlice from './alertSlice.js';
 import loaderSlice from './loaderSlice.js';
-
+import cartSlice from './cartSlice.js';
+import apiSlice from './apiSlice.js';
 const combinedReducer = combineReducers({
   users,
   alert:alertSlice,
   loader:loaderSlice,
-  popup:popUpSlice
+  popup:popUpSlice,
+  cart:cartSlice
+  ,api:apiSlice
 });
 
 const masterReducer = (state, action) => {

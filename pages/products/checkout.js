@@ -1,287 +1,274 @@
-import React from 'react'
-import Layout from '@/components/Layout'
+import React, { useEffect, useState } from "react";
+import Layout from "@/components/Layout";
+import AddAddress from "@/components/AddAddress";
+import { useSelector } from "react-redux";
+import axios from "axios";
+import { useRouter } from "next/router";
+
 function chackout() {
+const user = useSelector((state) => state.users.user);
+const [promoDetails, setPromoDetails] = useState();
+const [proceed, setProceed] = useState(false);
+const [total,setTotal]=useState()
+const [isShipping,setISShipping]=useState()
+const [rid,setRid]=useState()
+const router=useRouter()
+// const[p_add,setp_add]=useState()
+  const sendDetails = async () => {
+   const token = localStorage.getItem("tmToken");
+    try {
+      const response = await axios.post(
+        "https://admin.tradingmaterials.com/api/lead/product/checkout/place-order",
+        {
+          client_id: user?.id,
+          order_id:rid || sessionStorage.getItem("order_id"),
+          total: promoDetails?.total ?promoDetails?.total :total,
+          subtotal:promoDetails?.subtotal ?promoDetails?.subtotal :total,
+          promocode: promoDetails?.discount ?promoDetails?.discount:0,
+          disc_percent: promoDetails?.disc_percent ?promoDetails?.disc_percent:0,
+          discount: promoDetails?.discount ?promoDetails?.discount:0,
+          b_address_id: user?.primary_address[0].id,
+          shipping_address:isShipping?true:false,
+          s_address_id: isShipping?isShipping:null,
+          note:""
+        },
+        {
+          headers: {
+            "access-token": token,
+          },
+        }
+      );
+
+      if (response.data.status) {
+        console.log(response.data.data, "yuuoyio");
+    router.push("/payment_success")
+      }
+      console.log(response);
+    } catch (error) {
+
+      console.log(error)
+    }
+  };
+
+  async function handleBookingPaymentResponse(res) {
+    console.log(res);
+    const token = localStorage.getItem("tmToken");
+    console.log(token);
+    setRid(res.razorpay_order_id)
+     sessionStorage.setItem("order_id",res.razorpay_order_id)
+    try {
+      const response = await axios.post(
+        "https://admin.tradingmaterials.com/api/lead/product/checkout/verify-payment",
+        {
+          order_id: res.razorpay_order_id,
+          payment_id: res.razorpay_payment_id,
+          signature: res.razorpay_signature,
+          payment_type:1,
+        },
+        {
+          headers: {
+            "access-token": token,
+          },
+        }
+      );
+      if (response.data.status) {
+         console.log(response, "verify-");
+        sendDetails()
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  function handleBookingCheckout(res) {
+    var options = {
+      key_id: res?.client_id,
+      amount: res.total,
+      currency: "INR",
+      name: "Trading Materials",
+      description: "Booking Request amount for Trading Materials",
+      image: "https://tradingmaterials.vercel.app/assets/img/logo/logo.png",
+      order_id: res.order_id,
+      handler: handleBookingPaymentResponse,
+      prefill: {
+        name: user?.first_name,
+        email: user?.email,
+        contact: 8861151876,
+      },
+      notes: {
+        address: "note value",
+      },
+      theme: {
+        color: " #0000FF",
+      },
+    };
+
+    let rzp = new window.Razorpay(options);
+    rzp.open();
+  }
+  const getOrderDtails = async () => {
+    const token = localStorage.getItem("tmToken");
+
+    try {
+      const response = await axios.get(
+        "https://admin.tradingmaterials.com/api/lead/product/apply-register-promo-code",
+        {
+          headers:{
+            "access-token": token,
+          },
+        }
+      );
+
+      if (response.data.status) {
+        console.log(response.data.data, "promo");
+        setPromoDetails(response.data.data);
+      }
+      console.log(response);
+    } catch (error) {}
+  };
+
+  const PlaceOrder = async () => {
+    const token = localStorage.getItem("tmToken");
+
+    try {
+      const response = await axios.post(
+        "https://admin.tradingmaterials.com/api/lead/product/checkout/create-order",
+        {
+          total: 2000,
+          payment_type: user?.payment_types[0].id,
+        },
+        {
+          headers: {
+            "access-token": token,
+          },
+        }
+      );
+
+      if (response.data.status) {
+        console.log(response.data.data, "create-order");
+        handleBookingCheckout(response.data.data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getOrderDtails();
+    setTotal(user?.cart?.reduce((pre,cur)=>(pre+cur.price*cur.qty),0))
+  }, [user]);
   return (
     <Layout>
-    <main>
-
-  
-       <section class="breadcrumb__area include-bg pt-95 pb-50" data-bg-color="#EFF1F5">
+      <main>
+        <section
+          class="breadcrumb__area include-bg pt-95 pb-50"
+          data-bg-color="#EFF1F5"
+        >
           <div class="container">
-             <div class="row">
-                <div class="col-xxl-12">
-                   <div class="breadcrumb__content p-relative z-index-1">
-                      <h3 class="breadcrumb__title">Checkout</h3>
-                      <div class="breadcrumb__list">
-                         <span><a href="#">Home</a></span>
-                         <span>Checkout</span>
-                      </div>
-                   </div>
+            <div class="row">
+              <div class="col-xxl-12">
+                <div class="breadcrumb__content p-relative z-index-1">
+                  <h3 class="breadcrumb__title">Checkout</h3>
+                  <div class="breadcrumb__list">
+                    <span>
+                      <a href="#">Home</a>
+                    </span>
+                    <span>Checkout</span>
+                  </div>
                 </div>
-             </div>
+              </div>
+            </div>
           </div>
-       </section>
+        </section>
 
-
-
-       <section class="tp-checkout-area pb-120" data-bg-color="#EFF1F5">
+        <section class="tp-checkout-area pb-120" data-bg-color="#EFF1F5">
           <div class="container">
-             <div class="row">
-                <div class="col-xl-7 col-lg-7">
-                   <div class="tp-checkout-verify">
-                      <div class="tp-checkout-verify-item">
-                         <p class="tp-checkout-verify-reveal">Returning customer?<button type="button" class="tp-checkout-login-form-reveal-btn">Click here to login</button></p>
+            <div class="row">
+              <div class="col-lg-7">
+                <div class="tp-checkout-bill-area">
+                  <h3 class="tp-checkout-bill-title">Contact Details</h3>
 
-                         <div id="tpReturnCustomerLoginForm" class="tp-return-customer">
-                            <form action="#">
-                               
-                               <div class="tp-return-customer-input">
-                                  <label>Email</label>
-                                  <input type="text" placeholder="Your Email" />
-                               </div>
-                               <div class="tp-return-customer-input">
-                                  <label>Password</label>
-                                  <input type="password" placeholder="Password" />
-                               </div>
-
-                               <div class="tp-return-customer-suggetions d-sm-flex align-items-center justify-content-between mb-20">
-                                  <div class="tp-return-customer-remeber">
-                                     <input id="remeber" type="checkbox" />
-                                     <label for="remeber">Remember me</label>
-                                  </div>
-                                  <div class="tp-return-customer-forgot">
-                                     <a href="forgot.html">Forgot Password?</a>
-                                  </div>
-                               </div>
-                               <button type="submit" class="tp-return-customer-btn tp-checkout-btn">Login</button>
-                            </form>
-                         </div>
-                      </div>
-                      <div class="tp-checkout-verify-item">
-                         <p class="tp-checkout-verify-reveal">Have a coupon? <button type="button" class="tp-checkout-coupon-form-reveal-btn">Click here to enter your code</button></p>
-
-                         <div id="tpCheckoutCouponForm" class="tp-return-customer">
-                            <form action="#">
-                               <div class="tp-return-customer-input">
-                                  <label>Coupon Code :</label>
-                                  <input type="text" placeholder="Coupon" />
-                               </div>
-                               <button type="submit" class="tp-return-customer-btn tp-checkout-btn">Apply</button>
-                            </form>
-                         </div>
-                      </div>
-                   </div>
+                  <div class="tp-checkout-bill-form">
+                    {user && (
+                      <AddAddress setProceed={setProceed} proceed={proceed}  setISShipping={setISShipping}/>
+                    )}
+                  </div>
                 </div>
-                <div class="col-lg-7">
-                   <div class="tp-checkout-bill-area">
-                      <h3 class="tp-checkout-bill-title">Billing Details</h3>
+              </div>
+              <div class="col-lg-5">
+                <div class="tp-checkout-place white-bg">
+                  <h3 class="tp-checkout-place-title">Your Order</h3>
 
-                      <div class="tp-checkout-bill-form">
-                         <form action="#">
-                            <div class="tp-checkout-bill-inner">
-                               <div class="row">
-                                  <div class="col-md-6">
-                                     <div class="tp-checkout-input">
-                                        <label>First Name <span>*</span></label>
-                                        <input type="text" placeholder="First Name" />
-                                     </div>
-                                  </div>
-                                  <div class="col-md-6">
-                                     <div class="tp-checkout-input">
-                                        <label>Last Name <span>*</span></label>
-                                        <input type="text" placeholder="Last Name" />
-                                     </div>
-                                  </div>
-                                  <div class="col-md-12">
-                                     <div class="tp-checkout-input">
-                                        <label>Company name (optional)</label>
-                                        <input type="text" placeholder="Example LTD." />
-                                     </div>
-                                  </div>
-                                  <div class="col-md-12">
-                                     <div class="tp-checkout-input">
-                                        <label>Country / Region </label>
-                                        <input type="text" placeholder="United States (US)" />
-                                     </div>
-                                  </div>
-                                  <div class="col-md-12">
-                                     <div class="tp-checkout-input">
-                                        <label>Street address</label>
-                                        <input type="text" placeholder="House number and street name" />
-                                     </div>
+                  <div class="tp-order-info-list">
+                    <ul>
+                      <li class="tp-order-info-list-header">
+                        <h4>Product</h4>
+                        <h4>Total</h4>
+                      </li>
+                      {user?.cart.map((data, i) => (
+                        <li class="tp-order-info-list-desc" key={i}>
+                          <p>{data.product.name}</p>
+                          <span>₹{data.price * data.qty}</span>
+                        </li>
+                      ))}
+                      <li class="tp-order-info-list-total">
+                        <span> Sub Total</span>
+                        <span>₹{promoDetails?.subtotal?promoDetails?.subtotal: total}</span>
+                      </li>
+                      <li class="tp-order-info-list-total">
+                        <span>Discount</span>
+                        <span>₹{promoDetails?.discount?promoDetails?.discount:0}</span>
+                      </li>{" "}
+                      <li class="tp-order-info-list-total">
+                        <span>Total</span>
+                        <span>₹{promoDetails?.total ? promoDetails?.total : total}</span>
 
-                                     <div class="tp-checkout-input">
-                                        <input type="text" placeholder="Apartment, suite, unit, etc. (optional)" />
-                                     </div>
-                                  </div>
-                                  <div class="col-md-12">
-                                     <div class="tp-checkout-input">
-                                        <label>Town / City</label>
-                                        <input type="text" placeholder="" />
-                                     </div>
-                                  </div>
-                                  <div class="col-md-6">
-                                     <div class="tp-checkout-input">
-                                        <label>State / County</label>
-                                        <select>
-                                           <option>New York US</option>
-                                           <option>Berlin Germany</option>
-                                           <option>Paris France</option>
-                                           <option>Tokiyo Japan</option>
-                                        </select>
-                                     </div>
-                                  </div>
-                                  <div class="col-md-6">
-                                     <div class="tp-checkout-input">
-                                        <label>Postcode ZIP</label>
-                                        <input type="text" placeholder="" />
-                                     </div>
-                                  </div>
-                                  <div class="col-md-12">
-                                     <div class="tp-checkout-input">
-                                        <label>Phone <span>*</span></label>
-                                        <input type="text" placeholder="" />
-                                     </div>
-                                  </div>
-                                  <div class="col-md-12">
-                                     <div class="tp-checkout-input">
-                                        <label>Email address <span>*</span></label>
-                                        <input type="email" placeholder="" />
-                                     </div>
-                                  </div>
-                                  <div class="col-md-12">
-                                     <div class="tp-checkout-option-wrapper">
-                                        <div class="tp-checkout-option">
-                                           <input id="create_free_account" type="checkbox" />
-                                           <label for="create_free_account">Create an account?</label>
-                                        </div>
-                                        <div class="tp-checkout-option">
-                                           <input id="ship_to_diff_address" type="checkbox" />
-                                           <label for="ship_to_diff_address">Ship to a different address?</label>
-                                        </div>
-                                     </div>
-                                  </div>
-                                  <div class="col-md-12">
-                                     <div class="tp-checkout-input">
-                                        <label>Order notes (optional)</label>
-                                        <textarea placeholder="Notes about your order, e.g. special notes for delivery."></textarea>
-                                     </div>
-                                  </div>
-                               </div>
-                            </div>
-                         </form>
-                      </div>
-                   </div>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="tp-checkout-payment">
+                    {user?.payment_types.map((data,id)=>(
+   <div class="tp-checkout-payment-item" key={id}>
+   <input type="radio" id="back_transfer" name="payment" />
+   <label
+     for="back_transfer"
+     data-bs-toggle="direct-bank-transfer"
+   >
+    {data.name}
+   </label>
+ </div>
+                    ))}
+                 
+                   
+                  </div>
+                  <div class="tp-checkout-agree">
+                    <div class="tp-checkout-option">
+                      <input id="read_all" type="checkbox" />
+                      <label for="read_all">
+                        I have read and agree to the website.
+                      </label>
+                    </div>
+                  </div>
+                  <div class="tp-checkout-btn-wrapper">
+                    <button
+                      class={`w-100 py-3 text-xl ${
+                        user?.primary_address[0]
+                          ? "bg-orange-600 text-white"
+                          : "bg-gray-400 text-white"
+                      }`}
+                      disabled={!user?.primary_address[0]}
+                      onClick={PlaceOrder}
+                    >
+                      Place Order
+                    </button>
+                  </div>
                 </div>
-                <div class="col-lg-5">
-        
-                   <div class="tp-checkout-place white-bg">
-                      <h3 class="tp-checkout-place-title">Your Order</h3>
-
-                      <div class="tp-order-info-list">
-                         <ul>
-
-                        
-                            <li class="tp-order-info-list-header">
-                               <h4>Product</h4>
-                               <h4>Total</h4>
-                            </li>
-
-                            <li class="tp-order-info-list-desc">
-                               <p>Xiaomi Redmi Note 9 Global V.<span>x2</span></p>
-                               <span>$274:00</span>
-                            </li>
-                            <li class="tp-order-info-list-desc">
-                               <p>Office Chair Multifun <span>x1</span></p>
-                               <span>$74:00</span>
-                            </li>
-                            <li class="tp-order-info-list-desc">
-                               <p>Apple Watch Series 6 Stainless  <span>x3</span></p>
-                               <span>$362:00</span>
-                            </li>
-                            <li class="tp-order-info-list-desc">
-                               <p>Body Works Mens Collection <span>x1</span></p>
-                               <span>$145:00</span>
-                            </li>
-
-                      
-                            <li class="tp-order-info-list-subtotal">
-                               <span>Subtotal</span>
-                               <span>$507.00</span>
-                            </li>
-
-                            <li class="tp-order-info-list-shipping">
-                               <span>Shipping</span>
-                               <div class="tp-order-info-list-shipping-item d-flex flex-column align-items-end">
-                                  <span>
-                                     <input id="flat_rate" type="radio" name="shipping" />
-                                     <label for="flat_rate">Flat rate:<span>$20.00</span></label>
-                                  </span>
-                                  <span>
-                                     <input id="local_pickup" type="radio" name="shipping" />
-                                     <label for="local_pickup">Local pickup:<span>$25.00</span></label>
-                                  </span>
-                                  <span>
-                                     <input id="free_shipping" type="radio" name="shipping" />
-                                     <label for="free_shipping">Free shipping</label>
-                                  </span>
-                               </div>
-                            </li>
-
-                            <li class="tp-order-info-list-total">
-                               <span>Total</span>
-                               <span>$1,476.00</span>
-                            </li>
-                         </ul>
-                      </div>
-                      <div class="tp-checkout-payment">
-                         <div class="tp-checkout-payment-item">
-                            <input type="radio" id="back_transfer" name="payment" />
-                            <label for="back_transfer" data-bs-toggle="direct-bank-transfer">Direct Bank Transfer</label>
-                            <div class="tp-checkout-payment-desc direct-bank-transfer">
-                               <p>Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order will not be shipped until the funds have cleared in our account.</p>
-                            </div>
-                         </div>
-                         <div class="tp-checkout-payment-item">
-                            <input type="radio" id="cheque_payment" name="payment" />
-                            <label for="cheque_payment">Cheque Payment</label>
-                            <div class="tp-checkout-payment-desc cheque-payment">
-                               <p>Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order will not be shipped until the funds have cleared in our account.</p>
-                            </div>
-                         </div>
-                         <div class="tp-checkout-payment-item">
-                            <input type="radio" id="cod" name="payment" />
-                            <label for="cod">Cash on Delivery</label>
-                            <div class="tp-checkout-payment-desc cash-on-delivery">
-                               <p>Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order will not be shipped until the funds have cleared in our account.</p>
-                            </div>
-                         </div>
-                         <div class="tp-checkout-payment-item paypal-payment">
-                            <input type="radio" id="paypal" name="payment" />
-                            <label for="paypal">PayPal <img src="assets/img/icon/payment-option.png" alt="" /> <a href="#">What is PayPal?</a></label>
-                         </div>
-                      </div>
-                      <div class="tp-checkout-agree">
-                         <div class="tp-checkout-option">
-                            <input id="read_all" type="checkbox" />
-                            <label for="read_all">I have read and agree to the website.</label>
-                         </div>
-                      </div>
-                      <div class="tp-checkout-btn-wrapper">
-                         <a href="#" class="tp-checkout-btn w-100">Place Order</a>
-                      </div>
-                   </div>
-                </div>
-             </div>
+              </div>
+            </div>
           </div>
-       </section>
-
-
-
-    </main>
-    
+        </section>
+      </main>
     </Layout>
-  )
+  );
 }
 
-export default chackout
+export default chackout;

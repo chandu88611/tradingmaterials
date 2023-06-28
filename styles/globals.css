@@ -48,25 +48,25 @@ to {
 }
 /* Track */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 18px;
   height: 6px;
   
 }
 
 /* Track Color */
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: #97ec87;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #888;
+  background: #0e91b9;
   border-radius: 4px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  background: #357ae2;
 }
 
 .product1.show1 {
@@ -110,7 +110,7 @@ to {
     animation: spin2 .5s ease-in-out;
   }
   .com3{
-    animation: spin2 1s ease-in-out;
+    animation: spin3 1s ease-in-out;
   }
   @keyframes spin2{
    from{
@@ -119,9 +119,21 @@ to {
     }
    to {
     opacity: 1;
-      transform: translateY(0);
+      transform: translateY(380px);
     }
   }
+
+   @keyframes spin3{
+    from{
+     opacity: 0;
+       transform: translateY(-500px);
+   
+     }
+    to {
+     opacity: 1;
+     transform: translateY(0px);
+     }
+   } 
 
   .com1{
     animation: spin4 1s ease-in-out;
@@ -130,11 +142,11 @@ to {
   @keyframes spin4{
    from{
     opacity: 0;
-      transform: translateX(-500px);
+      transform: translateY(-500px);
     }
    to {
     opacity: 1;
-      transform: translateX(0);
+      transform: translateY(0);
     }
   }
   .rotate{
@@ -150,16 +162,7 @@ to {
     animation: spin3 1s ease-in-out;
   }
   
-  @keyframes spin3{
-   from{
-    opacity: 0;
-      transform: translateX(500px);
-    }
-   to {
-    opacity: 1;
-      transform: translateX(0);
-    }
-  }
+ 
 
 @keyframes rotating2{
   0% {
@@ -224,14 +227,15 @@ to {
    
    .cta svg {
     position: relative;
-    top: 0;
-    margin-left: 10px;
+    top: -2px;
+    margin-left: 12px;
     fill: none;
     stroke-linecap: round;
     stroke-linejoin: round;
     stroke: #234567;
-    stroke-width: 2;
-    transform: translateX(-5px);
+    stroke-width: 3;
+  
+    transform: translateX(-10px);
     transition: all 0.3s ease;
    }
    
@@ -298,10 +302,24 @@ to {
     width: 160%;
   } 
 
+.width_anim{
+animation: fade-in-out 1s ease-in ;
+}
 
-
-  /* profile page css */
-
+@keyframes fade-in-out {
+  0% {
+    opacity: 0;
+    max-height: 2vh;
+  }
+  50% {
+    opacity: 0.5;
+    max-height: 11.5vh;
+  }
+  100% {
+    opacity: 1;
+    max-height: fit-content;
+  }
+}
   .address-btn {
     float: right;
     background: #FFC107;
@@ -389,3 +407,220 @@ to {
     .tp-product-details-tab-nav .nav-tabs .nav-link:not(:first-child) {
     margin-left: 0;
     }
+
+
+    @media only screen and (max-width: 1263px) {
+      .fix-it {
+       
+        display: none !important;
+      }
+    }
+   
+    @media only screen and (max-width: 1649px) {
+      .fix-it {
+        position: fixed;
+        right: 6vw !important;
+      }
+    }
+    
+    @media only screen and (max-width: 1800px) {
+      .fix-it {
+        position: fixed;
+        right: 9vw !important;
+      }
+    }
+    
+    @media only screen and (max-width: 3000px) {
+      .fix-it {
+        position: fixed;
+        right: 18vw;
+        display: block;
+      }
+    }
+    
+
+
+    /* payment success */
+    .text-right{
+      text-align: right!important;
+   }
+   .table{
+      width: max-content;
+      margin: auto;
+   }
+   .detail-title {
+       font-size: 14px;
+       color: #1c1c1c;
+       padding: 5px 0!important;
+       border: 0;
+   }
+   .detail-desc {
+       color: #7a7a7a;
+       padding: 2px!important;
+       border: 0;
+       font-size: 16px;
+   }
+   .p-20 {
+       padding: 20px;
+   }
+   .main-row{
+      margin-top: 100px;
+   }
+   @media only screen and (max-width: 600px) {
+     .main-row{
+         margin-top: 30px;
+      }
+   }
+   .border-left{
+      border-left: 1px solid #d4d5d6!important;
+   }
+   .border-right{
+      border-right: 1px solid #d4d5d6!important;
+   }
+   .border-top{
+      border-top: 1px solid #d4d5d6!important;
+   }
+   .border-bottom{
+      border-bottom: 1px solid #d4d5d6!important;
+   }
+
+   .border-left-light{
+      border-left: 1px solid #e7e7e7!important;
+   }
+   .border-right-light{
+      border-right: 1px solid #e7e7e7!important;
+   }
+   .border-top-light{
+      border-top: 1px solid #e7e7e7!important;
+   }
+   .border-bottom-light{
+      border-bottom: 1px solid #e7e7e7!important;
+   }
+   .text-orange{
+      color: orange!important;
+   }
+   p{
+      line-height: 1.25;
+   }
+
+
+
+   /* Payment fail */
+
+   .text-right{
+    text-align: right!important;
+ }
+ .table{
+    width: max-content;
+    margin: auto;
+ }
+ .detail-title {
+     font-size: 14px;
+     color: #1c1c1c;
+     padding: 5px 0!important;
+     border: 0;
+ }
+ .detail-desc {
+     color: #7a7a7a;
+     padding: 2px!important;
+     border: 0;
+     font-size: 16px;
+ }
+ .p-20 {
+     padding: 20px;
+ }
+ .main-row{
+    margin-top: 100px;
+ }
+ @media only screen and (max-width: 600px) {
+   .main-row{
+       margin-top: 30px;
+    }
+ }
+ .border-left{
+    border-left: 1px solid #d4d5d6!important;
+ }
+ .border-right{
+    border-right: 1px solid #d4d5d6!important;
+ }
+ .border-top{
+    border-top: 1px solid #d4d5d6!important;
+ }
+ .border-bottom{
+    border-bottom: 1px solid #d4d5d6!important;
+ }
+
+ .border-left-light{
+    border-left: 1px solid #e7e7e7!important;
+ }
+ .border-right-light{
+    border-right: 1px solid #e7e7e7!important;
+ }
+ .border-top-light{
+    border-top: 1px solid #e7e7e7!important;
+ }
+ .border-bottom-light{
+    border-bottom: 1px solid #e7e7e7!important;
+ }
+ .text-orange{
+    color: orange!important;
+ }
+ .tp-btn-2 {
+     padding: 5px 20px;
+ }
+ .btn-green {
+     background: #8BC34A;
+ }
+ .btn-orange {
+     background: #FF9800;
+ }
+ p{
+    line-height: 1.25;
+ }
+
+/* CartIcon.css */
+.animate-image {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: slideImage 3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes slideImage {
+  0% {
+    top:80%;
+    left: 0;
+    opacity: 1;
+    width: 100%;
+  }
+ 
+  100% {
+    top: 3%;
+    left: 78%; 
+    opacity: 0.5;
+    width: 0%;
+  }
+}
+
+
+
+.cart_glow{
+  animation:glowAnimation 1s linear;
+}
+
+
+@keyframes glowAnimation {
+  0% {
+    background-color: transparent;
+    box-shadow: 1px 1px 5px 5px  rgba(255, 255, 0, 0.5);
+
+  }
+  50% {
+    box-shadow: 5px 5px 15px 30px  rgba(255, 255, 0, 0.5);
+  }
+  100% {
+    background-color: transparent;
+    box-shadow: none;
+  }
+}

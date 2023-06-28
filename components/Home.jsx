@@ -90,38 +90,42 @@ checkAuthentication()
 
       </div>
 
-      <div className={`tp-product-gadget-sidebar w-full hidden lg:w-96 static xl:fixed lg:right-10 xl:right-28 2xl:right-[18.5vw] ${topClass} pt-5 -z-10 lg:m-auto xl:block`} >
+      <div className={`tp-product-gadget-sidebar w-full hidden lg:w-[400px]  ${topClass} pt-5 -z-10   fix-it`} >
         <div className="tp-product-gadget-categories p-relative fix mb-10">
           <div className="tp-product-gadget-thumb">
             <img src="/assets/img/product/gadget/gadget-girl.png" alt="" />
           </div>
           <h3 className="tp-product-gadget-categories-title">
-            Product 1 Gadgets
+          New to trading? <br/> <span className="font-semibold text-xl">Use these analysis notes.</span>
           </h3>
-          <div className="tp-product-gadget-categories-list -mt-1">
-            <ul>
-              <li>
-                <a href="#">Micrscope</a>
-              </li>
-              <li>
-                <a href="#">Remote Control</a>
-              </li>
-              <li>
-                <a href="#">Monitor</a>
-              </li>
-              <li>
-                <a href="#">Thermometer</a>
-              </li>
-              <li>
-                <a href="#">Backpack</a>
-              </li>
-              <li>
-                <a href="#">Headphones</a>
-              </li>
-            </ul>
+          <div className="tp-product-gadget-categories-list -mt-1 text-blue-600">
+            <div className="flex flex-col gap-y-2">
+           
+                <div>- Flyer's</div>
+             
+           
+                <div> - Wall Hanging
+</div>
+             
+           
+                <div> - Book's
+</div>
+             
+           
+                <div>- Real scenario cards</div>
+             
+           
+                <div>- Sticker's
+</div>
+             
+           
+                <div>- Table top board
+</div>
+             
+            </div>
           </div>
           <div className="tp-product-gadget-btn">
-            <a href="#" className="tp-link-btn">
+            <div className="tp-link-btn">
               More Products
               <svg
                 width="15"
@@ -145,11 +149,11 @@ checkAuthentication()
                   strokeLinejoin="round"
                 />
               </svg>
-            </a>
+            </div>
           </div>
         </div>
 
-        <div className="tp-product-gadget-banner w-full lg:w-96 -mt-9 h-20">
+        <div className="tp-product-gadget-banner w-[400px] -mt-9 h-18">
           <div className="tp-product-gadget-banner-slider-active swiper-container h-36">
             <div className="swiper-wrapper">
               <div
@@ -161,12 +165,12 @@ checkAuthentication()
               >
                 <div className="tp-product-gadget-banner-content">
                   <span className="tp-product-gadget-banner-price">
-                    Only $4999.00
+                  Order with less than 500 INR
                   </span>
                   <h3 className="tp-product-gadget-banner-title">
-                    <a href="#">
-                      Intermediate <br /> Products
-                    </a>
+                    <div>
+                    Easy Cash On Deliver<br />  @  Door Step's.
+                    </div>
                   </h3>
                 </div>
               </div>
@@ -179,9 +183,9 @@ checkAuthentication()
                     Only $55.00
                   </span>
                   <h3 className="tp-product-gadget-banner-title">
-                    <a href="#">
+                    <div>
                       Top Rated <br /> Products
-                    </a>
+                    </div>
                   </h3>
                 </div>
               </div>
@@ -190,41 +194,45 @@ checkAuthentication()
           </div>
         </div>
       </div>
-      {show&&<AiOutlineArrowRight className="text-blue-500 fixed right-[2px] top-52 text-3xl product3 xl:hidden cursor-pointer" onClick={()=>setShow(!show)}/>}
-<button className="vertical-text text-center font-semibold bg-blue-500 rounded text-white p-1 fixed right-0 top-60 xl:hidden z-[300] cursor-pointer" onClick={()=>setShow(!show)}>Exclusive</button>
-{show&&<div className={`tp-product-gadget-sidebar fixed right-10 top-60 w-[282px] md:w-96 xl:hidden  pt-5  lg:m-auto  z-[244] product3 `} >
+      {show&&<AiOutlineArrowRight className="text-blue-500 fixed right-[2px] top-32 text-3xl product3 xl:hidden cursor-pointer" onClick={()=>setShow(!show)}/>}
+<button className="vertical-text text-center font-semibold bg-blue-500 rounded text-white p-1 fixed right-0 top-40 xl:hidden z-[300] cursor-pointer" onClick={()=>setShow(!show)}>Exclusive</button>
+{show&&<div className={`tp-product-gadget-sidebar fixed right-10 top-40 w-[300px] sm:w-[350px] md:w-[400px] xl:hidden  pt-5  lg:m-auto  z-[244] product3 `} >
         <div className="tp-product-gadget-categories p-relative fix mb-10">
           <div className="tp-product-gadget-thumb">
             <img src="/assets/img/product/gadget/gadget-girl.png" alt="" />
           </div>
           <h3 className="tp-product-gadget-categories-title">
-            Product 1 Gadgets
+          New to trading? <br/> <span className="font-semibold text-xl">Use these analysis notes.</span>
           </h3>
           <div className="tp-product-gadget-categories-list -mt-1">
-            <ul>
-              <li>
-                <a href="#">Micrscope</a>
-              </li>
-              <li>
-                <a href="#">Remote Control</a>
-              </li>
-              <li>
-                <a href="#">Monitor</a>
-              </li>
-              <li>
-                <a href="#">Thermometer</a>
-              </li>
-              <li>
-                <a href="#">Backpack</a>
-              </li>
-              <li>
-                <a href="#">Headphones</a>
-              </li>
-            </ul>
+            <div className="flex flex-col gap-y-1 text-blue-500">
+           
+                <div>- Flyer's</div>
+             
+           
+                <div>- Wall Hanging
+</div>
+             
+           
+                <div>- Book's
+</div>
+             
+           
+                <div>- Real scenario cards</div>
+             
+           
+                <div>- Sticker's
+</div>
+             
+           
+                <div>- Table top board
+</div>
+             
+            </div>
           </div>
           <div className="tp-product-gadget-btn">
-            <a href="#" className="tp-link-btn">
-              More Products
+            <div className="tp-link-btn">
+              More 
               <svg
                 width="15"
                 height="13"
@@ -247,12 +255,12 @@ checkAuthentication()
                   strokeLinejoin="round"
                 />
               </svg>
-            </a>
+            </div>
           </div>
         </div>
 
-        <div className="tp-product-gadget-banner w-full lg:w-96 -mt-9 h-20">
-          <div className="tp-product-gadget-banner-slider-active swiper-container h-36">
+        <div className="tp-product-gadget-banner  w-[300px] sm:w-[400px]  -mt-9 ">
+          <div className="tp-product-gadget-banner-slider-active swiper-container h-20">
             <div className="swiper-wrapper">
               <div
                 className="tp-product-gadget-banner-item swiper-slide include-bg"
@@ -261,14 +269,14 @@ checkAuthentication()
                     "url(/assets/img/product/gadget/gadget-banner-1.jpg)",
                 }}
               >
-                <div className="tp-product-gadget-banner-content">
-                  <span className="tp-product-gadget-banner-price">
-                    Only $4999.00
+                <div className="text-white pl-3">
+                  <span className="">
+                  Order with less than 500 INR
                   </span>
-                  <h3 className="tp-product-gadget-banner-title">
-                    <a href="#">
-                      Intermediate <br /> Products
-                    </a>
+                  <h3 className="text-white font-bold">
+                    <div>
+                    Easy Cash On Deliver<br />  @  Door Step's.
+                    </div>
                   </h3>
                 </div>
               </div>
@@ -281,9 +289,9 @@ checkAuthentication()
                     Only $55.00
                   </span>
                   <h3 className="tp-product-gadget-banner-title">
-                    <a href="#">
+                    <div>
                       Top Rated <br /> Products
-                    </a>
+                    </div>
                   </h3>
                 </div>
               </div>
@@ -297,7 +305,7 @@ checkAuthentication()
  <div className="w-full flex flex-wrap gap-4 mt-20 mb-8 justify-center">
   {products.map((data,index)=>(
     
-    <Link href={`/products/${data.id}`}><Produuct key={index} data={data}/></Link>
+  <Produuct key={index} data={data}/>
   ))}
     
    

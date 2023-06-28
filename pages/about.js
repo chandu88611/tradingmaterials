@@ -1,9 +1,9 @@
 import React from 'react'
 import Layout from '@/components/Layout'
-function contactus() {
+function about() {
   return (
-    <Layout >contactus</Layout >
+    <Layout >about</Layout >
   )
 }
 
-export default contactus
+export default about

@@ -11,7 +11,8 @@ import axios from "axios";
 import Link from "next/link";
 import { TextField } from "@mui/material";
 import { useSelector,useDispatch } from 'react-redux';
- import { setPopUp } from '@/store/popUpSlice';
+import { setPopUp } from '@/store/popUpSlice';
+
 
 const schema = yup.object().shape({
   email: yup
@@ -94,10 +95,10 @@ router.push("https://client.tradingmaterials.com/dashboard/")
     }
   };
   return (
-    <div className="w-full">
-       <section className=" pb-140 p-relative z-index-1 fix mt-8">
+    <div className="w-full h-[100vh] pt-36" style={{backgroundImage:"url(/back_img.jpg)"}}>
+       <section className=" pb-140 p-relative z-index-1 fix ">
            
-            <div className="container">
+            <div className="container w-2/3">
                <div className="row justify-content-center">
                   <div className="col-xl-6 col-lg-8">
               {/* <AiFillCloseCircle size={"30px"} className="text-red-600 cursor-pointer" onClick={()=>dispatch(setPopUp(!popup))}/> */}
@@ -110,22 +111,23 @@ router.push("https://client.tradingmaterials.com/dashboard/")
           <form
             name="loginForm"
             noValidate
-            className="flex flex-col justify-center w-full mt-20 "
+            className="flex flex-col justify-center w-full mt-20  "
             onSubmit={handleSubmit(onSubmit)}
           >
             <div className="mb-12">
+              <label htmlFor="Email">Email</label>
               <Controller
                 name="email"
                 control={control}
                 render={({ field }) => (
                   <TextField
                     {...field}
-                    label="Email"
+                
                     autoFocus
                     type="email"
                     error={!!errors.email}
                     helperText={errors?.email?.message}
-                    variant="outlined"
+             
                     required
                     fullWidth
                   autoComplete="email"
@@ -134,17 +136,18 @@ router.push("https://client.tradingmaterials.com/dashboard/")
                 )}
               />
             </div>
+            <label htmlFor="Email">Password</label>
             <Controller
               name="password"   
               control={control}
               render={({ field }) => (
                 <TextField
                   {...field}
-                  label="Password"
+
                   type="password"
                   error={!!errors.password}
                   helperText={errors?.password?.message}
-                  variant="outlined"
+           
                   autoComplete="current-password"
                   required
                   fullWidth

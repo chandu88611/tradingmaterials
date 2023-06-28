@@ -15,6 +15,7 @@ module.exports = {
       colors: {
         customColor: 'rgb(0,0,0,.7)',
         card:"rgb(200,200,200,.3)"
+        ,cus:"	#4CBB17"
       },
     },
   },

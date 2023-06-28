@@ -5,7 +5,7 @@ import * as yup from "yup";
 import axios from 'axios'
 import { BiLoaderAlt } from "react-icons/bi";
 import Link from "next/link";
-
+import { useRouter } from "next/router";
 const GENDER_OPTIONS = [
   { text: "Male", value: "male" },
   { text: "Female", value: "female" },
@@ -16,7 +16,7 @@ const schema = yup.object({
     firstName: yup.string().required("First Name is required"),
     lastName: yup.string().required("Last Name is required"),
     phone: yup.string().required("Phone number is required").min(10, "The Number must be 10 characters").max(10, "The Number must be 10 characters"),
-    city: yup.string().required("city is required"),
+
     email: yup.string().required("Email is required").email("This must be a email"),
    
   })
@@ -30,6 +30,7 @@ const register = () => {
     phone:"",
 
  })
+ const router=useRouter()
  const [emailValid, setEmailValid] = useState({state:true,message:"",color:''});
  const [showLoader,setShowLoader]=useState(false)
 const [emailTimeout,setEmailTimeout]=useState()
@@ -76,7 +77,6 @@ const [emailTimeout,setEmailTimeout]=useState()
     const onSubmit = async (values) => {
       setShowLoader(true)
 
-if(!emailValid.state){
         try {
           const res = await axios.post(
             "https://admin.tradingmaterials.com/api/client/store",
@@ -92,11 +92,12 @@ if(!emailValid.state){
               },
             }
           );
-      console.log(res)
-          const responseMessage = res.data.message;
-          if(responseMessage){
-            setSuccess(responseMessage)
-            reset()
+      
+          if(res.data.status){
+            localStorage.setItem("tmToken",res.data.token)
+            // setSuccess(responseMessage)
+            router.push("/")
+            
           }
           if(res){
             setShowLoader(false)
@@ -137,7 +138,6 @@ if(!emailValid.state){
           console.log(error.config); 
         }
 
-      };
       
  }
     
@@ -188,9 +188,9 @@ setSuccess("")
     };
   }, [emailTimeout]);
   return (
-    <>
+    < div style={{backgroundImage:"url(/back_img.jpg)"}} className="w-full h-[100vh] pt-36">
     
-<div className="grid grid-cols-1 lg:grid-cols-2  w-[70%]  h-fit mt-10 mx-auto p-4 bg-white shadow-md rounded" >
+<div className="grid grid-cols-1 lg:grid-cols-2  w-[60%]  h-fit  mx-auto p-4 bg-white shadow-md rounded"  >
 <form onSubmit={handleSubmit(onSubmit)} className=" flex flex-col gap-3 px-5 py-2 com3   bg-white ">
     <div className=" text-center ">
                      <img src="/icon.png" className="w-14 m-auto"/>    <h3 className="tp-login-title"> Trading Material <span className="text-blue-500">Customer</span> </h3>
@@ -249,14 +249,16 @@ setSuccess("")
       </div>
 
     
-
-      <button className="cta flex items-center"  >
-  <span>Register</span>
-  <svg viewBox="0 0 13 10" height="10px" width="15px">
+      <button className="cta flex items-center "  disabled={false} >
+      <svg viewBox="0 0 13 10" height="10px" width="15px" >
     <path d="M1,5 L11,5"></path>
     <polyline points="8 1 12 5 8 9"></polyline>
   </svg>
+  <span>Register</span>
+  
 </button>
+<p>You agree to Trading Materials  <Link href={"/terms-and-conditions"} className="text-blue-500"> terms and conditions</Link></p>
+
       <p className="text-green-600">{succes}</p>
     </form>
     <div className=" ">
@@ -273,7 +275,7 @@ setSuccess("")
     </div>}
 
 
-    </>
+    </div>
   );
 };
 

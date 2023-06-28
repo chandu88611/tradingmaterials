@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { useRouter } from 'next/router';
 import axios from "axios";
 import CartProduct from '@/components/CartProduct';
+import Link from 'next/link';
 function cart() {
    const user =useSelector(state=>state.users.user?.cart)
    const [total,setTotal]=useState("")
@@ -66,11 +67,11 @@ setTotal(user?.reduce((prev,cur)=>prev+cur.price*cur.qty,0))
                 <div class="tp-cart-list mb-25 mr-30">
                    <table class="table">
                       <thead>
-                        <tr>
-                          <th colspan="2" class="tp-cart-header-product">Product</th>
-                          <th class="tp-cart-header-price">Price</th>
-                          <th class="tp-cart-header-quantity">Quantity</th>
-                          <th></th>
+                        <tr className='font-semibold px-6'>
+                          <th colspan="2" class="tp-cart-header-product  " style={{fontWeight:'bold'}}>Product</th>
+                          <th class="tp-cart-header-price " style={{fontWeight:'bold'}}>Price</th>
+                          <th class="tp-cart-header-quantity " style={{fontWeight:'bold'}}>Quantity</th>
+                          <th class=" " style={{fontWeight:'bold'}}>Delete</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -102,10 +103,7 @@ setTotal(user?.reduce((prev,cur)=>prev+cur.price*cur.qty,0))
                             <input id="local_pickup" type="radio" name="shipping"/>
                             <label for="local_pickup">Local pickup: <span> ₹25.00</span></label>
                          </div>
-                         <div class="tp-cart-checkout-shipping-option">
-                            <input id="free_shipping" type="radio" name="shipping"/>
-                            <label for="free_shipping">Free shipping</label>
-                         </div>
+                      
                       </div>
                    </div>
                    <div class="tp-cart-checkout-total d-flex align-items-center justify-content-between">
@@ -113,7 +111,7 @@ setTotal(user?.reduce((prev,cur)=>prev+cur.price*cur.qty,0))
                       <span>₹{total}</span>
                    </div>
                    <div class="tp-cart-checkout-proceed">
-                      <a href="checkout.html" class="tp-cart-checkout-btn w-100">Proceed to Checkout</a>
+                      <Link href="/products/checkout" class="tp-cart-checkout-btn w-100">Proceed to Checkout</Link>
                    </div>
                 </div>
              </div>

@@ -1,8 +1,10 @@
+import Layout from '@/components/Layout'
 import React from 'react'
+
 
 function termsandconditions() {
   return (
-    <div>termsandconditions</div>
+    <Layout>termsandconditions</Layout>
   )
 }
 export default termsandconditions

@@ -8,6 +8,8 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { FaUserCircle } from "react-icons/fa";
+import { BsCircleFill } from "react-icons/bs";
+
 import axios from "axios";
 
 function UserMenu() {
@@ -39,6 +41,7 @@ function UserMenu() {
         localStorage.removeItem("tmToken");
         window.location.reload();
       }
+
     } catch (error) {
 
       console.error(error);
@@ -51,14 +54,12 @@ function UserMenu() {
         aria-haspopup="true"
         onClick={handleClick}
         size="large"
+        className="relative"
       >
-       {/* {user?.profile.profile_image && <img
-          src={user?.profile.profile_image}
-          alt="logo-light.png"
-          className="w-10 h-10 rounded-full"
-        />} */}
+       
 
         <FaUserCircle size="2rem" />
+   <p className={`absolute right-3 text-sm bottom-3 ${user?.primary_address[0]?"text-cus":"text-red-700"}`}><BsCircleFill/></p>
       </IconButton>
       <Menu
         classes={{ paper: "w-30" }}
@@ -77,7 +78,7 @@ function UserMenu() {
         }}
       >
         <div className="py-2 px-4">
-          <Link href="/dashboard/my-profile">
+          <Link href="/profile">
             
             <div
               className={`flex items-center mb-2 hover:bg-gray-100 p-2 rounded-md cursor-pointer ${
@@ -86,7 +87,7 @@ function UserMenu() {
                   : "text-gray-600"
               }`}
             >
-              <RiUserLine size="1.5rem" className="mr-2" />
+              <RiUserLine size="1.7rem" className="mr-2" />
               <Typography variant="body1">Profile</Typography>
             </div>
           </Link>
@@ -107,6 +108,7 @@ function UserMenu() {
           </div>
         </div>
       </Menu>
+ 
     </div>
   );
 }

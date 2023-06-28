@@ -1,31 +1,61 @@
 import Link from 'next/link';
-import React, { useState } from 'react'
+import React, { useEffect,  useState } from 'react'
 // FaUserCircle
 
 import { useRouter } from 'next/router';
 import { FaUserCircle,FaSearch} from "react-icons/fa";
+import { AiFillCloseCircle,AiOutlineShoppingCart} from "react-icons/ai";
 import SignInPage from './Login';
 import { useSelector,useDispatch } from 'react-redux';
  import { setPopUp } from '@/store/popUpSlice';
+ import { setAlert } from '@/store/alertSlice';
 import UserMenu from './UserMenu';
+import Wishlist_modal from './Wishlist_modal';
+import { addImage } from '@/store/cartSlice';
 function Header() {
- 
-   const[user,setUser]=useState(false)
+   const cartItems = useSelector((state) => state.cart);
+   const[wish1,setWish]=useState(false)
    const users=useSelector(state=>state.users.user)
    const dispatch =useDispatch()
-   const [login,setIsLogin]=useState(false)
+   const [cartglow,setCartglow]=useState(false)
+
 const popup=useSelector(state=>state.popup)
 console.log(popup)
  const router=useRouter()
-   const checkUser=()=>{
+   const checkUser=(wish)=>{
   
   if(!users?.id){
 dispatch(setPopUp(!popup))
   }
-  if(users?.id){
+  if(users?.id && wish==="cart" && users?.cart.length>0){
 router.push("/products/cart")
   }
+  if(users?.id &&wish==="wish" && users?.wishlist.length>0){
+   setWish(!wish1)
+
+     }
+     if(users?.id && wish==="cart" && users?.cart.length<1){
+      dispatch(setAlert({message:'Add Something to your cart',color:"blue"}))
+      setTimeout(()=>{
+         dispatch(setAlert({message:'',color:"blue"}))
+
+      },1500)
+        }
+        if(users?.id &&wish==="wish" && users?.wishlist.length<1){
+         dispatch(setAlert({message:'Add Something to your wishlist',color:"blue"}))
+         setTimeout(()=>{
+            dispatch(setAlert({message:'',color:"blue"}))
+   
+         },1500)
+           }
    }
+   useEffect(() => {
+
+  setTimeout(()=>{
+dispatch(addImage({img1:""}))
+
+  },4000)
+     }, [cartItems]);
   return (
     <div>
         <div className="offcanvas__area offcanvas__radius">
@@ -110,10 +140,10 @@ router.push("/products/cart")
             <div className="row row-cols-5">
                <div className="col">
                   <div className="tp-mobile-item text-center">
-                     <a href="#" className="tp-mobile-item-btn">
+                     <Link href="" className="tp-mobile-item-btn">
                      <i className="flaticon-store"></i>
                      <span>Store</span>
-                     </a>
+                     </Link>
                   </div>
                </div>
                <div className="col">
@@ -126,18 +156,18 @@ router.push("/products/cart")
                </div>
                <div className="col">
                   <div className="tp-mobile-item text-center">
-                     <a href="#" className="tp-mobile-item-btn">
+                     <Link href="#" className="tp-mobile-item-btn">
                      <i className="flaticon-love"></i>
                      <span>Wishlist</span>
-                     </a>
+                     </Link>
                   </div>
                </div>
                <div className="col">
                   <div className="tp-mobile-item text-center">
-                     <a href="#" className="tp-mobile-item-btn">
+                     <Link href="/profile" className="tp-mobile-item-btn">
                      <i className="flaticon-user"></i>
                      <span>Account</span>
-                     </a>
+                     </Link>
                   </div>
                </div>
                <div className="col">
@@ -270,7 +300,7 @@ router.push("/products/cart")
                               </a>
                            </div>
                            
-                           <div className="tp-header-action-item d-none d-lg-block">
+                           <div className="tp-header-action-item d-none d-lg-block" onClick={()=>checkUser("wish")}>
                               <Link href="#" className="tp-header-action-btn">
                                  <svg width="22" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path fillRule="evenodd" clipRule="evenodd" d="M11.239 18.8538C13.4096 17.5179 15.4289 15.9456 17.2607 14.1652C18.5486 12.8829 19.529 11.3198 20.1269 9.59539C21.2029 6.25031 19.9461 2.42083 16.4289 1.28752C14.5804 0.692435 12.5616 1.03255 11.0039 2.20148C9.44567 1.03398 7.42754 0.693978 5.57894 1.28752C2.06175 2.42083 0.795919 6.25031 1.87187 9.59539C2.46978 11.3198 3.45021 12.8829 4.73806 14.1652C6.56988 15.9456 8.58917 17.5179 10.7598 18.8538L10.9949 19L11.239 18.8538Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
@@ -281,7 +311,7 @@ router.push("/products/cart")
                            </div>
                            <div className="tp-header-action-item">
                        
-                              <button type="button" className="tp-header-action-btn cartmini-open-btn" onClick={checkUser}>
+                              <button type="button" className={`tp-header-action-btn cartmini-open-btn ${cartItems?"cart_glow":''}`} onClick={()=>checkUser("cart")}>
                                  <svg width="21" height="22" viewBox="0 0 21 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path fillRule="evenodd" clipRule="evenodd" d="M6.48626 20.5H14.8341C17.9004 20.5 20.2528 19.3924 19.5847 14.9348L18.8066 8.89359C18.3947 6.66934 16.976 5.81808 15.7311 5.81808H5.55262C4.28946 5.81808 2.95308 6.73341 2.4771 8.89359L1.69907 14.9348C1.13157 18.889 3.4199 20.5 6.48626 20.5Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                                     <path d="M6.34902 5.5984C6.34902 3.21232 8.28331 1.27803 10.6694 1.27803V1.27803C11.8184 1.27316 12.922 1.72619 13.7362 2.53695C14.5504 3.3477 15.0081 4.44939 15.0081 5.5984V5.5984" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
@@ -294,7 +324,7 @@ router.push("/products/cart")
                            <div className="  mt-[-7px] ml-6">
                         
                                  <div className="">
-                              {  users?.id?  <UserMenu/> :<button className=' border-blue-200 font-semibold text-blue-400 border-b-2 py-1'>Login</button>}
+                              {  users?.id? <div className=' items-center flex'> <UserMenu/><p className='text-lg font-semibold hidden sm:flex'>{users?.first_name}</p> </div> :<button className=' border-blue-200 font-semibold text-blue-400 border-b-2 py-1'><Link href={"/sign-in"}>Login</Link></button>}
                                  </div>
                                 
                            
@@ -449,15 +479,15 @@ router.push("/products/cart")
                                        </div>
                                     </div>
                                  </li>
-                                 <li><a href="#">About Us</a></li>
+                                 <li><Link href="/about">About Us</Link></li>
                                  <li>
-                                    <a href="#" >
+                                    <Link href="/today-deals" >
                                     <span className="tag tag__text">Hot</span>
-                                    Todays Deals</a>   
+                                    Todays Deals</Link>   
                                  </li>
-                                 <li><a href="#">Shipping Policy</a></li>
-                                 <li><a href="#">Terms and Conditions</a></li>
-                                 <li><a href="#">Contact</a></li>
+                                 <li><Link href="/shipping-policy">Shipping Policy</Link></li>
+                                 <li><Link href="/terms-and-conditions">Terms and Conditions</Link></li>
+                                 <li><Link href="/contact-us">Contact</Link></li>
                               </ul>
                            </nav>
                         </div>
@@ -554,15 +584,15 @@ router.push("/products/cart")
                                     </div>
                                  </div>
                               </li>
-                              <li><a href="#">About Us</a></li>
-                              <li><a href="#">Exclusive</a></li>
-                              <li>
-                                 <a href="#" >
-                                 <span className="tag tag__text">Hot</span>
-                                 Todays Deals</a>   
-                              </li>
-                              <li><a href="#">Terms and Conditions</a></li>
-                              <li><a href="#">Contact</a></li>
+                              <li><Link href="/about">About Us</Link></li>
+                                 <li>
+                                    <Link href="/today-deals" >
+                                    <span className="tag tag__text">Hot</span>
+                                    Todays Deals</Link>   
+                                 </li>
+                                 <li><Link href="/shipping-policy">Shipping Policy</Link></li>
+                                 <li><Link href="/terms-and-conditions">Terms and Conditions</Link></li>
+                                 <li><Link href="/contact-us">Contact</Link></li>
                            </ul>
                            
                         </nav>
@@ -570,18 +600,18 @@ router.push("/products/cart")
                      <div className="col-xl-3 col-lg-3 col-md-3 col-6 absolute  top-4 right-6">
                      <div className="tp-header-action d-flex align-items-center justify-content-end ml-50">
                        
-                        <div className="tp-header-action-item d-none d-lg-block">
+                        <div className="tp-header-action-item d-none d-lg-block" onClick={()=>checkUser("wish")}>
                            <a href="#" className="tp-header-action-btn">
                               <svg width="22" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                  <path fillRule="evenodd" clipRule="evenodd" d="M11.239 18.8538C13.4096 17.5179 15.4289 15.9456 17.2607 14.1652C18.5486 12.8829 19.529 11.3198 20.1269 9.59539C21.2029 6.25031 19.9461 2.42083 16.4289 1.28752C14.5804 0.692435 12.5616 1.03255 11.0039 2.20148C9.44567 1.03398 7.42754 0.693978 5.57894 1.28752C2.06175 2.42083 0.795919 6.25031 1.87187 9.59539C2.46978 11.3198 3.45021 12.8829 4.73806 14.1652C6.56988 15.9456 8.58917 17.5179 10.7598 18.8538L10.9949 19L11.239 18.8538Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                                  <path d="M7.26062 5.05302C6.19531 5.39332 5.43839 6.34973 5.3438 7.47501" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                               </svg>
-                              <span className="tp-header-action-badge">{users?.wishlist_count||0}</span>                          
+                              <span className="tp-header-action-badge">{users?.wishlist_count?users?.wishlist_count:0}</span>                          
                            </a>
                         </div>
                         <div className="tp-header-action-item">
              
-                              <button type="button" className="tp-header-action-btn cartmini-open-btn" onClick={checkUser}>
+                              <button type="button" className={`tp-header-action-btn cartmini-open-btn ${cartItems?"cart_glow":''}`} onClick={()=>checkUser("cart")}>
                                  <svg width="21" height="22" viewBox="0 0 21 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path fillRule="evenodd" clipRule="evenodd" d="M6.48626 20.5H14.8341C17.9004 20.5 20.2528 19.3924 19.5847 14.9348L18.8066 8.89359C18.3947 6.66934 16.976 5.81808 15.7311 5.81808H5.55262C4.28946 5.81808 2.95308 6.73341 2.4771 8.89359L1.69907 14.9348C1.13157 18.889 3.4199 20.5 6.48626 20.5Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                                     <path d="M6.34902 5.5984C6.34902 3.21232 8.28331 1.27803 10.6694 1.27803V1.27803C11.8184 1.27316 12.922 1.72619 13.7362 2.53695C14.5504 3.3477 15.0081 4.44939 15.0081 5.5984V5.5984" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
@@ -593,7 +623,7 @@ router.push("/products/cart")
                         </div>  <div className="  mt-[-7px] ml-6">
                         
                         <div className="">
-                     {  users?.id?  <UserMenu/> :<button className=' border-blue-200 text-bold text-blue-400' ><Link href={"/sign-in"}>Login</Link></button>}
+                     {  users?.id? <div className=' items-center flex'> <UserMenu/><p className='text-lg font-semibold hidden sm:flex'>{users?.first_name}</p> </div> :<button className=' border-blue-200 text-bold text-blue-400' ><Link href={"/sign-in"}>Login</Link></button>}
                         </div>
                        
                   
@@ -617,13 +647,27 @@ router.push("/products/cart")
 
 
       </div>
-{popup && <div  className='fixed w-[100vw] h-[100vh] top-24  z-[100] flex items-center justify-center com'>
-   {/* <SignInPage/> */}
-   <Link href={"/register"}><img src="/offer.jpg" alt="" /></Link>
+{popup && <div className='com' >
+   <span className='  fixed  top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2  z-[100] '>
+<AiFillCloseCircle className='text-red-500 text-3xl cursor-pointer' onClick={()=>dispatch(setPopUp(!popup))}/>
+   <Link href={"/register"}  ><img src="/banner-cart.jpg" alt=""/></Link></span>
    </div>}
      
-  
-                               
+  {wish1&&
+  <div className='fixed  top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2  z-[100] w-full m-1 p-4 bg-white shadow md:w-[70vw] lg:w-[60vw] xl:w-[40vw]  '>
+   <AiFillCloseCircle className='float-right mb-2  text-3xl text-red-500 cursor-pointer' onClick={()=>setWish(!wish1)}/>
+     <Wishlist_modal/>
+  </div>
+  }
+       {cartItems.img1&& <div className="animate-image">
+         <img src={cartItems.img1} alt="" />
+         </div>  }   
+
+
+         <div className="fixed bottom-20 right-4 md:right-20 rounded-full shadow-lg p-3 z-[455] bg-white "  style={{border:"3px solid blue"}}>
+         <span className="absolute right-3 top-2 font-bold text-xs text-blue-500 bg-white p-1 rounded-full h-4 w-4 flex items-center justify-center " style={{boxShadow:'1px 1px 2px'}}>{users?.cart_count||0}</span> 
+         <AiOutlineShoppingCart className='text-2xl  md:text-3xl  text-blue-900' />
+            </div>                  
       </div>
   )
 }
