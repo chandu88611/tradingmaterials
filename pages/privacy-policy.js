@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
 function privacypolicy() {
-  return (
-    <div>privacypolicy</div>
-  )
+  return <div>privacypolicy</div>;
 }
 
-export default privacypolicy
+export default privacypolicy;

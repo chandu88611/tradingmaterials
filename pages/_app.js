@@ -1,11 +1,11 @@
 // import { useEffect, useState } from 'react';
 // import Router from 'next/router';
 // import NProgress from 'nprogress';
-import 'nprogress/nprogress.css';
-import { wrapper } from '@/store/store';
+import "nprogress/nprogress.css";
+import { wrapper } from "@/store/store";
 
 // import { BiLoaderAlt } from "react-icons/bi";
-import '@/styles/globals.css';
+import "@/styles/globals.css";
 
 // Router.events.on('routeChangeStart', () => {
 //   NProgress.start();
@@ -39,8 +39,7 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <>
-     
-  <Component {...pageProps} />
+      <Component {...pageProps} />
     </>
   );
 }

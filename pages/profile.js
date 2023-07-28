@@ -5,14 +5,11 @@ import UpdateProfile from "@/components/profile/UpdateProfile";
 import axios from "axios";
 import ChangePassword from "@/components/profile/ChangePassword";
 
-
 function profile() {
   const user = useSelector((state) => state.users.user);
   const [profileImage, setProfileImage] = useState("");
 
-
   const imageUpdate = async () => {
-   
     const token = localStorage.getItem("tmToken");
 
     try {
@@ -23,7 +20,7 @@ function profile() {
         },
         {
           headers: {
-           "access-token": token,
+            "access-token": token,
             "Content-Type": "multipart/form-data",
           },
         }
@@ -31,12 +28,9 @@ function profile() {
 
       console.log(response);
       if (response.data.status) {
-  
-       window.location.reload()}
-
-    } catch (error) {
-    
-    }
+        window.location.reload();
+      }
+    } catch (error) {}
   };
 
   const handleImageUpload = (event) => {
@@ -50,23 +44,23 @@ function profile() {
       reader.readAsDataURL(file);
     }
   };
-useEffect(()=>{
-  if(profileImage){
-    imageUpdate()
-  }
-})
+  useEffect(() => {
+    if (profileImage) {
+      imageUpdate();
+    }
+  });
   return (
     <Layout>
-      <div className="row p-20">
+      <div className="row p-20 relative">
         <div className="col-xxl-4 col-lg-4">
           <div className="profile__tab mr-40">
             <nav>
               <div
-                className="nav nav-tabs tp-tab-menu flex-column h-[70vh]"
+                className="nav nav-tabs tp-tab-menu flex-column h-[70vh] "
                 id="profile-tab"
                 role="tablist"
+                style={{ position: "relative", zIndex: -2 }}
               >
-
                 <button
                   className="nav-link active py-4"
                   id="nav-profile-tab"
@@ -188,7 +182,6 @@ useEffect(()=>{
                   Change Password
                 </button>
 
-
                 <span
                   id="marker-vertical"
                   className="tp-tab-line d-none d-sm-inline-block"
@@ -198,7 +191,10 @@ useEffect(()=>{
           </div>
         </div>
 
-        <div className="col-xxl-8 col-lg-8 mt-2">
+        <div
+          className="col-xxl-8 col-lg-8 mt-2"
+          style={{ position: "relative", zIndex: -2 }}
+        >
           <div className="profile__tab-content">
             <div className="tab-content" id="profile-tabContent">
               <div
@@ -340,7 +336,7 @@ useEffect(()=>{
                     Personal Details
                   </h3>
                   <div className="profile__info-content">
-               <UpdateProfile/>
+                    <UpdateProfile />
                   </div>
                 </div>
               </div>
@@ -356,7 +352,7 @@ useEffect(()=>{
                   </h3>
                 </div>
                 <div className="profile__password">
-               <ChangePassword/>
+                  <ChangePassword />
                 </div>
               </div>
               <div
@@ -472,7 +468,7 @@ useEffect(()=>{
                 id="nav-order"
                 role="tabpanel"
                 aria-labelledby="nav-order-tab"
-                >
+              >
                 <div className="profile__notification-top mb-30">
                   <h3 className="profile__notification-title">My Orders</h3>
                 </div>
@@ -1640,29 +1636,19 @@ useEffect(()=>{
                           </h3>
                           <div className="tp-product-rating-icon tp-product-rating-icon-2">
                             <span>
-                              <i className="fa-solid fa-star">
-
-                              </i>
+                              <i className="fa-solid fa-star"></i>
                             </span>
                             <span>
-                              <i className="fa-solid fa-star">
-
-                              </i>
+                              <i className="fa-solid fa-star"></i>
                             </span>
                             <span>
-                              <i className="fa-solid fa-star">
-
-                              </i>
+                              <i className="fa-solid fa-star"></i>
                             </span>
                             <span>
-                              <i className="fa-solid fa-star">
-
-                              </i>
+                              <i className="fa-solid fa-star"></i>
                             </span>
                             <span>
-                              <i className="fa-solid fa-star">
-
-                              </i>
+                              <i className="fa-solid fa-star"></i>
                             </span>
                           </div>
                           <div className="tp-product-price-wrapper-2">

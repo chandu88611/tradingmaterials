@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 class ErrorBoundary extends React.Component {
   state = {
@@ -13,7 +13,6 @@ class ErrorBoundary extends React.Component {
       error,
       errorInfo,
     });
-
 
     console.error(error, errorInfo);
   }

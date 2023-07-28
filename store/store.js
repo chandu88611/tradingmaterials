@@ -31,21 +31,21 @@
 
 // export const wrapper = createWrapper(makeStore, { debug: true });
 
-import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import { HYDRATE, createWrapper } from 'next-redux-wrapper';
-import users from './userSlice.js';
-import popUpSlice from './popUpSlice.js';
-import alertSlice from './alertSlice.js';
-import loaderSlice from './loaderSlice.js';
-import cartSlice from './cartSlice.js';
-import apiSlice from './apiSlice.js';
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import { HYDRATE, createWrapper } from "next-redux-wrapper";
+import users from "./userSlice.js";
+import popUpSlice from "./popUpSlice.js";
+import alertSlice from "./alertSlice.js";
+import loaderSlice from "./loaderSlice.js";
+import cartSlice from "./cartSlice.js";
+import apiSlice from "./apiSlice.js";
 const combinedReducer = combineReducers({
   users,
-  alert:alertSlice,
-  loader:loaderSlice,
-  popup:popUpSlice,
-  cart:cartSlice
-  ,api:apiSlice
+  alert: alertSlice,
+  loader: loaderSlice,
+  popup: popUpSlice,
+  cart: cartSlice,
+  api: apiSlice,
 });
 
 const masterReducer = (state, action) => {
@@ -69,21 +69,12 @@ export const makeStore = () =>
 
 export const wrapper = createWrapper(makeStore, { debug: true });
 
-
-
-
-
-
-
-
-
 // import users from './userSlice.js';
 // import alert from './alertSlice.js';
 // import loader from './loaderSlice.js';
 
 // import { combineReducers, configureStore } from '@reduxjs/toolkit';
 // import { HYDRATE, createWrapper } from 'next-redux-wrapper';
-
 
 // const combinedReducer = combineReducers({
 //   users: users,

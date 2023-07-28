@@ -1,17 +1,17 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 const alertSlice = createSlice({
-  name: 'alert',
+  name: "alert",
   initialState: {
-    message: '',
-    color: '',
-    alert:""
+    message: "",
+    color: "",
+    alert: "",
   },
   reducers: {
     setAlert: (state, action) => {
       state.message = action.payload.message;
       state.color = action.payload.color;
-      state.alert=action.payload.alert
+      state.alert = action.payload.alert;
     },
   },
 });

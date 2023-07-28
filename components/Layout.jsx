@@ -9,11 +9,12 @@ import axios from "axios";
 import { useRouter } from "next/router";
 function Layout({ children }) {
   const user = useSelector((state) => state.users.user);
+  const main = useSelector((state) => state.cart);
   const dispatch = useDispatch();
   const state = useSelector((state) => state.alert);
   console.log(state);
   const router = useRouter();
-  const api=useSelector(state=>state.api)
+  const api = useSelector((state) => state.api);
   const fetchData = async () => {
     const authToken = localStorage.getItem("tmToken"); // Replace with your cookie retrieval logic
 
@@ -43,7 +44,7 @@ function Layout({ children }) {
     typeof window !== "undefined" && localStorage.getItem("tmToken");
   useEffect(() => {
     fetchData();
-  }, [token,api]);
+  }, [token, api, main]);
 
   useEffect(() => {
     if (!localStorage.getItem("tmToken")) {

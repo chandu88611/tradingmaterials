@@ -1,9 +1,7 @@
-import React from 'react'
-import Layout from '@/components/Layout'
+import React from "react";
+import Layout from "@/components/Layout";
 function contactus() {
-  return (
-    <Layout >contactus</Layout >
-  )
+  return <Layout>contactus</Layout>;
 }
 
-export default contactus
+export default contactus;

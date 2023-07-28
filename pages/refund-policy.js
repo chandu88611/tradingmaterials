@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
 function refundpolicy() {
-  return (
-    <div>refundpolicy</div>
-  )
+  return <div>refundpolicy</div>;
 }
 
-export default refundpolicy
+export default refundpolicy;

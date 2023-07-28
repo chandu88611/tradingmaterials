@@ -581,10 +581,8 @@ animation: fade-in-out 1s ease-in ;
 /* CartIcon.css */
 .animate-image {
   position: fixed;
-  top: 50%;
-  left: 50%;
   transform: translate(-50%, -50%);
-  animation: slideImage 3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation: slideImage 3s  forwards;
 }
 
 @keyframes slideImage {
@@ -596,25 +594,42 @@ animation: fade-in-out 1s ease-in ;
   }
  
   100% {
-    top: 3%;
-    left: 78%; 
+    bottom: 10%;
+    right: 4%; 
     opacity: 0.5;
     width: 0%;
   }
 }
 
-
-
-.cart_glow{
-  animation:glowAnimation 1s linear;
+.animate-image1 {
+  position: fixed;
+  transform: translate(-50%, -50%);
+  animation: slideImage1 3s  forwards;
 }
 
+@keyframes slideImage1 {
+  0% {
+    bottom: 10%;
+    right: 4%; 
+    opacity: 0.5;
+    width: 0%;
+
+  }
+  100% {
+    top:80%;
+    left: 0;
+    opacity: 1;
+    width: 100%;
+  }
+}
+.cart_glow{
+  animation:glowAnimation 1s infinite linear;
+}
 
 @keyframes glowAnimation {
   0% {
     background-color: transparent;
     box-shadow: 1px 1px 5px 5px  rgba(255, 255, 0, 0.5);
-
   }
   50% {
     box-shadow: 5px 5px 15px 30px  rgba(255, 255, 0, 0.5);

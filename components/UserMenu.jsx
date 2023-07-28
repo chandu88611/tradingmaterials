@@ -36,14 +36,12 @@ function UserMenu() {
           },
         }
       );
-  
+
       if (response.status) {
         localStorage.removeItem("tmToken");
         window.location.reload();
       }
-
     } catch (error) {
-
       console.error(error);
     }
   };
@@ -56,10 +54,14 @@ function UserMenu() {
         size="large"
         className="relative"
       >
-       
-
         <FaUserCircle size="2rem" />
-   <p className={`absolute right-3 text-sm bottom-3 ${user?.primary_address[0]?"text-cus":"text-red-700"}`}><BsCircleFill/></p>
+        <p
+          className={`absolute right-3 text-sm bottom-3 ${
+            user?.primary_address[0] ? "text-cus" : "text-red-700"
+          }`}
+        >
+          <BsCircleFill />
+        </p>
       </IconButton>
       <Menu
         classes={{ paper: "w-30" }}
@@ -79,12 +81,9 @@ function UserMenu() {
       >
         <div className="py-2 px-4">
           <Link href="/profile">
-            
             <div
               className={`flex items-center mb-2 hover:bg-gray-100 p-2 rounded-md cursor-pointer ${
-                path.includes( "my-profile")
-                  ? "text-blue-700"
-                  : "text-gray-600"
+                path.includes("my-profile") ? "text-blue-700" : "text-gray-600"
               }`}
             >
               <RiUserLine size="1.7rem" className="mr-2" />
@@ -108,7 +107,6 @@ function UserMenu() {
           </div>
         </div>
       </Menu>
- 
     </div>
   );
 }
